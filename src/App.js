@@ -3,9 +3,6 @@ import { createHashRouter } from "./core/router.js";
 import "./components/Count.js";
 
 class AppComponent extends BaseComponent.withModule(import.meta.url) {
-  static templateUrl = new URL("./App.html", import.meta.url);
-  static styleUrl = new URL("./App.css", import.meta.url);
-
   setup({ useState }) {
     useState("route", "/");
     useState("routeStack", ["/"]);
