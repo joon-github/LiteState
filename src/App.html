@@ -1,0 +1,62 @@
+<div class="app-shell">
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Lite Router Demo</p>
+      <h1>Hash 기반 라우터</h1>
+      <p class="lede">주소창 # 뒤 경로를 상태로 삼아 뷰를 전환합니다.</p>
+    </div>
+    <nav class="nav">
+      <a href="#/" data-path="/" data-on="click:onNavigate">홈</a>
+      <a href="#/about" data-path="/about" data-on="click:onNavigate">소개</a>
+      <a href="#/play" data-path="/play" data-on="click:onNavigate">플레이</a>
+      <a href="#/play/count" data-path="/play/count" data-on="click:onNavigate">플레이/카운트</a>
+    </nav>
+    <p class="route-indicator">현재 경로: <span data-state="route"></span></p>
+  </header>
+
+  <main class="view" data-router-container>
+    <section data-route-view="/">
+      <h2>홈</h2>
+      <p>해시(#)를 감지해 상태를 업데이트하고, 템플릿은 data-condition으로 전환합니다.</p>
+      <ul class="bullets">
+        <li>상단 네비게이션을 눌러 경로 변경</li>
+        <li>주소창에 직접 #/about 입력</li>
+        <li>정의되지 않은 경로 → 404 뷰</li>
+      </ul>
+    </section>
+
+    <section data-route-view="/about">
+      <h2>소개</h2>
+      <p>BaseComponent의 상태 관리와 data-condition을 조합한 간단한 라우터 예제입니다.</p>
+      <div class="note">
+        <p>핵심은 <code>hashchange</code> 이벤트 → <code>setRoute</code> → 템플릿 조건부 렌더입니다.</p>
+      </div>
+    </section>
+
+    <section data-route-layout="/play">
+      <h2>플레이 레이아웃</h2>
+      <p>여기서 하위 경로로 확장할 수 있습니다. 예: <code>#/play/count</code></p>
+      <div class="note">
+        <p>이 영역은 /play 및 그 하위 경로에 대해 레이아웃처럼 유지됩니다.</p>
+      </div>
+      <div data-route-slot>
+        <section data-route-view="/play">
+          <div class="note">
+            <p>/play 기본 화면입니다. 하위 경로가 없다면 이 뷰가 나타납니다.</p>
+          </div>
+        </section>
+
+        <section data-route-view="/play/count">
+          <h2>플레이 / Count</h2>
+          <p>중첩 경로에 대한 예시입니다.</p>
+          <count-component></count-component>
+        </section>
+      </div>
+    </section>
+
+    <section data-route-view="notfound">
+      <h2>404</h2>
+      <p>등록되지 않은 경로입니다. 상단 메뉴를 눌러 이동하세요.</p>
+    </section>
+  </main>
+</div>

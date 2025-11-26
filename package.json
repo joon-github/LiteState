@@ -1,0 +1,23 @@
+{
+  "name": "lite_react",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "module": "dist/lite-react.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/lite-react.es.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "vite": "^7.2.4"
+  }
+}

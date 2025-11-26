@@ -1,0 +1,38 @@
+<style>
+  button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ccc;
+    color: #000;
+    cursor: pointer;
+  }
+  button:hover {
+    background-color: #000;
+    color: #fff;
+  }
+</style>
+
+<button id="increment" data-on="click:onIncrement">+</button>
+<button id="decrement" data-on="click:onDecrement">-</button>
+<button id="clear" data-on="click:onClear">clear</button>
+<button id="add" data-on="click:onAddUser">addUser</button>
+<button id="remove" data-on="click:onRemoveUser">removeUser</button>
+<button id="update" data-on="click:onUpdateUser">updateUser</button>
+<button id="reverse" data-on="click:onReverse">reverse</button>
+<button id="setStatus" data-on="click:onSetStatus">setStatus</button>
+<button id="moveToHome" data-on="click:onMoveToHome">moveToHome</button>
+<div data-condition="status">
+  <div data-condition-case="true">true</div>
+  <div data-condition-case="false">false</div>
+  <div data-condition-case="Pending">Pending</div>
+  <div data-condition-case="Error">Error</div>
+</div>
+<div data-state="count"></div>
+<countnumber-component data-root></countnumber-component>
+<ul>
+  <li data-repeat="users">
+    <span data-repeat-field="name"></span>
+    <span data-repeat-field="age"></span>
+  </li>
+</ul>
