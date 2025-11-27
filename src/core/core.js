@@ -8,6 +8,55 @@ const styleCache = new Map();
 let isScheduled = false;
 let isScheduledEffects = false;
 
+function extractViteCss(raw) {
+  if (!raw) return "";
+
+  // Vite가 만든 모듈이 아니면 그대로 CSS라고 보고 리턴
+  const marker = "const __vite__css =";
+  const start = raw.indexOf(marker);
+  if (start === -1) {
+    return raw;
+  }
+
+  let i = start + marker.length;
+
+  // 공백 스킵
+  while (i < raw.length && /\s/.test(raw[i])) i++;
+
+  // 문자열 시작 따옴표(" 또는 ')
+  const quote = raw[i];
+  if (quote !== '"' && quote !== "'") {
+    return raw;
+  }
+  i++;
+
+  let css = "";
+  let escaped = false;
+
+  // 따옴표 닫힐 때까지 JS 문자열 리터럴 직접 파싱
+  for (; i < raw.length; i++) {
+    const ch = raw[i];
+
+    if (escaped) {
+      // 최소한의 escape 처리 (\n, \t 정도만)
+      if (ch === "n") css += "\n";
+      else if (ch === "t") css += "\t";
+      else css += ch;
+      escaped = false;
+    } else if (ch === "\\") {
+      escaped = true;
+    } else if (ch === quote) {
+      // 문자열 끝
+      break;
+    } else {
+      css += ch;
+    }
+  }
+
+  return css;
+}
+
+
 function normalizeUrl(url) {
   if (!url) return "";
   if (typeof url === "string") return url;
@@ -559,7 +608,8 @@ export class BaseComponent extends HTMLElement {
       : Promise.resolve("");
 
     Promise.all([templatePromise, stylePromise])
-      .then(([template, css]) => {
+      .then(([template, cssRaw]) => {
+        const css = extractViteCss(cssRaw);
         if (typeof this.setup === "function") {
           this.setup({ useState: this.useState });
         }
